@@ -1,60 +1,63 @@
-import { type Locator, type Page, expect } from '@playwright/test';
+import { type Locator, type Page, expect } from "@playwright/test";
+
+export type MenuOption = "inventory" | "about" | "logout" | "reset";
 
 export class SideNavigationMenu {
-    readonly page: Page;
-    protected readonly sideNavLocator;
-    protected readonly sideNavAllItems;
-    protected readonly sideNavAbout;
-    protected readonly sideNavLogout;
-    protected readonly sideNavReset;
+  readonly page: Page;
+  protected readonly sideNavContainer: Locator;
+  protected readonly closeButton: Locator;
+  protected readonly openButton: Locator;
+  protected readonly twitterLink: Locator;
+  protected readonly facebookLink: Locator;
+  protected readonly linkedinLink: Locator;
 
-    constructor(page: Page) {
-        this.page = page;
-        this.sideNavLocator = this.page.getByText('All ItemsAboutLogoutReset App');
-        this.sideNavAllItems = this.page.locator('[data-test="inventory-sidebar-link"]');
-        this.sideNavAbout = this.page.locator('[data-test="about-sidebar-link"]');
-        this.sideNavLogout = this.page.locator('[data-test="logout-sidebar-link"]');
-        this.sideNavReset = this.page.locator('[data-test="reset-sidebar-link"]');
-    }
+  constructor(page: Page) {
+    this.page = page;
+    this.sideNavContainer = this.page.locator(".bm-menu-wrap");
+    this.closeButton = this.page.getByRole("button", { name: "Close Menu" });
+    this.openButton = this.page.getByRole("button", { name: "Open Menu" });
+    this.twitterLink = this.page.locator('[data-test="social-twitter"]');
+    this.facebookLink = this.page.locator('[data-test="social-facebook"]');
+    this.linkedinLink = this.page.locator('[data-test="social-linkedin"]');
+  }
 
-    protected async isSideNavOpen() {
-        const box = await this.sideNavLocator.boundingBox();
-        if (box!.x <0){
-            return false;
-        }
-        return true;
-    }
+  protected async isSideNavOpen(): Promise<boolean> {
+    const isVisible = await this.sideNavContainer.isVisible();
+    const ariaHidden = await this.sideNavContainer.getAttribute("aria-hidden");
+    return isVisible && ariaHidden === "false";
+  }
 
-    protected async openSideNav() {
-        if (!(await this.isSideNavOpen())) {
-            await this.page.getByRole('button', { name: 'Open Menu' }).click();
-            await this.page.waitForTimeout(500);
-        }
-        await expect(await this.isSideNavOpen()).toBeTruthy();
-        return this;
+  public async openSideNav() {
+    if (!(await this.closeButton.isVisible())) {
+      await this.openButton.click();
+      await expect(this.closeButton).toBeVisible();
     }
+  }
 
-    async navigateToAllItems() {
-        await this.openSideNav();
-        await this.sideNavAllItems.click();
-        await expect(this.page).toHaveURL('https://www.saucedemo.com/inventory.html');
-    }
+  public async selectMenuOption(option: MenuOption) {
+    await this.openSideNav();
+    await this.page.locator(`[data-test="${option}-sidebar-link"]`).click();
+  }
 
-    async navigateToAbout() {
-        await this.openSideNav();
-        await this.sideNavAbout.click();
-        await expect(this.page).toHaveURL('https://saucelabs.com/')
+  public async closeMenu() {
+    if (await this.closeButton.isVisible()) {
+      await this.closeButton.click();
+      await expect(this.closeButton).not.toBeVisible();
     }
+  }
 
-    async navigateToLogout() {
-        await this.openSideNav();
-        await this.sideNavLogout.click();
-        await expect(this.page).toHaveURL('https://www.saucedemo.com/');
-    }
+  public async openTwitter() {
+    await this.twitterLink.scrollIntoViewIfNeeded();
+    await this.twitterLink.click();
+}
 
-    async navigateToReset() {
-        await this.openSideNav();
-        await this.sideNavReset.click();
-        await this.page.waitForLoadState('networkidle');
-    }
+public async openFacebook() {
+    await this.facebookLink.scrollIntoViewIfNeeded();
+    await this.facebookLink.click();
+}
+
+public async openLinkedIn() {
+    await this.linkedinLink.scrollIntoViewIfNeeded();
+    await this.linkedinLink.click();
+}
 }
