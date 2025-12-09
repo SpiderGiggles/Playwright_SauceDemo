@@ -1,26 +1,38 @@
-import { type Locator, type Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 
 export class LoginPage {
-    readonly page: Page;
-    readonly usernameInput: Locator;
-    readonly passwordInput: Locator;
-    readonly loginButton: Locator;
+    private readonly page: Page;
+    public readonly usernameInput: Locator;
+    public readonly passwordInput: Locator;
+    public readonly loginButton: Locator;
+    public readonly lockedErrorMessage: Locator;
+
 
     constructor(page: Page) {
         this.page = page;
         this.usernameInput = page.locator('[data-test="username"]');
         this.passwordInput = page.locator('[data-test="password"]');
         this.loginButton = page.locator('[data-test="login-button"]');
+        this.lockedErrorMessage = page.locator('[data-test="error"]');
     }
 
-    async goto() {
-        await this.page.goto('https://www.saucedemo.com/');
-        await this.page.waitForLoadState('networkidle');
+    public async goTo() {
+        const response = await this.page.goto('https://www.saucedemo.com/');
+        expect(response?.request().method()).toBe('GET');
+        expect(response?.status()).toBe(200);
     }
 
-    async login(username: string, password: string) {
+    public async correctPageLand() {
+        await expect(this.page).toHaveURL(/.*inventory/);
+    }
+
+    public async login(username: string, password: string) {
         await this.usernameInput.fill(username);
         await this.passwordInput.fill(password);
         await this.loginButton.click();
+    }
+
+    public async lockedoutError() {
+        await expect(this.lockedErrorMessage).toBeVisible();
     }
 }

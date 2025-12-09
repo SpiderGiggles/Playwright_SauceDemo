@@ -4,21 +4,21 @@ export type MenuOption = "inventory" | "about" | "logout" | "reset";
 
 export class SideNavigationMenu {
   readonly page: Page;
-  protected readonly sideNavContainer: Locator;
-  protected readonly closeButton: Locator;
-  protected readonly openButton: Locator;
-  protected readonly twitterLink: Locator;
-  protected readonly facebookLink: Locator;
-  protected readonly linkedinLink: Locator;
+  public readonly sideNavContainer: Locator;
+  public readonly closeButton: Locator;
+  public readonly openButton: Locator;
+  public readonly twitterLink: Locator;
+  public readonly facebookLink: Locator;
+  public readonly linkedinLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.sideNavContainer = this.page.locator(".bm-menu-wrap");
-    this.closeButton = this.page.getByRole("button", { name: "Close Menu" });
-    this.openButton = this.page.getByRole("button", { name: "Open Menu" });
-    this.twitterLink = this.page.locator('[data-test="social-twitter"]');
-    this.facebookLink = this.page.locator('[data-test="social-facebook"]');
-    this.linkedinLink = this.page.locator('[data-test="social-linkedin"]');
+    this.sideNavContainer = page.locator(".bm-menu-wrap");
+    this.closeButton = page.getByRole("button", { name: "Close Menu" });
+    this.openButton = page.getByRole("button", { name: "Open Menu" });
+    this.twitterLink = page.locator('[data-test="social-twitter"]');
+    this.facebookLink = page.locator('[data-test="social-facebook"]');
+    this.linkedinLink = page.locator('[data-test="social-linkedin"]');
   }
 
   protected async isSideNavOpen(): Promise<boolean> {

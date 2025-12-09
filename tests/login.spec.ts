@@ -5,17 +5,35 @@ import { ProductsPage } from "../page-objects/productspage";
 import { CartPage } from "../page-objects/cartpage";
 import { FirstCheckoutPage } from "../page-objects/firstcheckoutpage";
 import { SecondCheckoutPage } from "../page-objects/secondcheckoutpage";
+import { LoginPage } from "../page-objects/loginpage";
 
-test.describe("Login Tests", () => {
+test.describe.serial("Login Tests", () => {
   test("Login Standard User", async ({ page }) => {
     await Authentication.login(page, "standard_user");
+    const loginPage = new LoginPage(page);
+    await loginPage.correctPageLand();
   });
 
+  test("Login Locked Out User", async ({ page }) => {
+    await Authentication.login(page, "locked_out_user");
+    const loginPage = new LoginPage(page);
+    await loginPage.lockedoutError();
+  });
+});
+
+test.describe("Navigation & Purchase Tests", () => {
   test("Navigate to About", async ({ page }) => {
     await Authentication.login(page, "standard_user");
     const sideNav = new SideNavigationMenu(page);
     await sideNav.selectMenuOption("about");
     await expect(page).toHaveURL("https://saucelabs.com/");
+  });
+
+  test("Sorting Test", async ({ page }) => {
+    await Authentication.login(page, "standard_user");
+    const productsPage = new ProductsPage(page);
+    await productsPage.selectSortOption("Name (Z to A)");
+    await productsPage.selectSortOption("Price (high to low)");
   });
 
   test("Backpack & Bike Purchase", async ({ page }) => {

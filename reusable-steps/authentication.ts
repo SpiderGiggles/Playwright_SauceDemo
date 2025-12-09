@@ -10,11 +10,7 @@ export class Authentication {
       (u) => u.username === username
     );
     const loginPage = new LoginPage(page);
-    await loginPage.goto();
+    await loginPage.goTo();
     await loginPage.login(user!.username, user!.password);
-  }
-
-  public static getUsers() {
-    return data.testUsers[0].swagLabs.users;
   }
 }

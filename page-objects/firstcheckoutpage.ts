@@ -2,20 +2,20 @@ import { expect, type Locator, type Page } from '@playwright/test';
 
 export class FirstCheckoutPage {
     private readonly page: Page;
-    protected readonly cancelButton: Locator;
-    protected readonly continueButton: Locator;
-    protected readonly firstName: Locator;
-    protected readonly lastName: Locator;
-    protected readonly postalCode: Locator;
+    public readonly cancelButton: Locator;
+    public readonly continueButton: Locator;
+    public readonly firstName: Locator;
+    public readonly lastName: Locator;
+    public readonly postalCode: Locator;
     
 
     constructor(page: Page) {
         this.page = page;
-        this.cancelButton = this.page.locator('[data-test="cancel"]');
-        this.continueButton = this.page.locator('[data-test="continue"]');
-        this.firstName = this.page.locator('[data-test="firstName"]');
-        this.lastName = this.page.locator('[data-test="lastName"]');
-        this.postalCode = this.page.locator('[data-test="postalCode"]');
+        this.cancelButton = page.locator('[data-test="cancel"]');
+        this.continueButton = page.locator('[data-test="continue"]');
+        this.firstName = page.locator('[data-test="firstName"]');
+        this.lastName = page.locator('[data-test="lastName"]');
+        this.postalCode = page.locator('[data-test="postalCode"]');
     }
 
     public async submitInformation(firstname: string, lastname: string, postalcode: string) {

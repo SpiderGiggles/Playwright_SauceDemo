@@ -9,9 +9,9 @@ export class SecondCheckoutPage {
 
     constructor(page: Page) {
         this.page = page;
-        this.continueButton = this.page.locator('[data-test="finish"]');
-        this.cancelButton = this.page.locator('[data-test="cancel"]');
-        this.backToProducts = this.page.locator('[data-test="back-to-products"]');
+        this.continueButton = page.locator('[data-test="finish"]');
+        this.cancelButton = page.locator('[data-test="cancel"]');
+        this.backToProducts = page.locator('[data-test="back-to-products"]');
     }
 
     public async finishOrder() {

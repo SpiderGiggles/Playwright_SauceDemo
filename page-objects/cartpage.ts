@@ -10,14 +10,14 @@ export type ProductId =
 
 export class CartPage {
     private readonly page: Page;
-    protected readonly continueShopping: Locator;
-    protected readonly checkoutPage: Locator;
+    public readonly continueShopping: Locator;
+    public readonly checkoutPage: Locator;
     
 
     constructor(page: Page) {
         this.page = page;
-        this.continueShopping = this.page.locator('[data-test="continue-shopping"]');
-        this.checkoutPage = this.page.locator('[data-test="checkout"]');
+        this.continueShopping = page.locator('[data-test="continue-shopping"]');
+        this.checkoutPage = page.locator('[data-test="checkout"]');
     }
 
     public async backToInventory() {
