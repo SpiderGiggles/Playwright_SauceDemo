@@ -3,7 +3,6 @@ import { type Locator, type Page, expect } from "@playwright/test";
 export type MenuOption = "inventory" | "about" | "logout" | "reset";
 
 export class SideNavigationMenu {
-  readonly page: Page;
   public readonly sideNavContainer: Locator;
   public readonly closeButton: Locator;
   public readonly openButton: Locator;
@@ -11,8 +10,7 @@ export class SideNavigationMenu {
   public readonly facebookLink: Locator;
   public readonly linkedinLink: Locator;
 
-  constructor(page: Page) {
-    this.page = page;
+  constructor(private readonly page: Page) {
     this.sideNavContainer = page.locator(".bm-menu-wrap");
     this.closeButton = page.getByRole("button", { name: "Close Menu" });
     this.openButton = page.getByRole("button", { name: "Open Menu" });

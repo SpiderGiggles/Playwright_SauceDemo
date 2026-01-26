@@ -1,14 +1,12 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
 export class SecondCheckoutPage {
-    private readonly page: Page;
-    public readonly continueButton;
-    public readonly cancelButton;
-    public readonly backToProducts;
+    public readonly continueButton: Locator;
+    public readonly cancelButton: Locator;
+    public readonly backToProducts: Locator;
     
 
-    constructor(page: Page) {
-        this.page = page;
+    constructor(private readonly page: Page) {
         this.continueButton = page.locator('[data-test="finish"]');
         this.cancelButton = page.locator('[data-test="cancel"]');
         this.backToProducts = page.locator('[data-test="back-to-products"]');

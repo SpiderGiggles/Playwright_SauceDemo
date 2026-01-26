@@ -9,12 +9,10 @@ export type ProductId =
   | "test.allthethings()-t-shirt-(red)";
 
 export class ProductsPage {
-  private readonly page: Page;
   public readonly sortContainer: Locator;
   public readonly cartLink: Locator;
 
-  constructor(page: Page) {
-    this.page = page;
+  constructor(private readonly page: Page) {
     this.sortContainer = page.locator('[data-test="product-sort-container"]');
     this.cartLink = page.locator('[data-test="shopping-cart-link"]');
   }
