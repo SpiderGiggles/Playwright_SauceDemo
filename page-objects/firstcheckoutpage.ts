@@ -6,7 +6,7 @@ export class FirstCheckoutPage {
     public readonly firstName: Locator;
     public readonly lastName: Locator;
     public readonly postalCode: Locator;
-    
+
 
     constructor(page: Page) {
         this.cancelButton = page.locator('[data-test="cancel"]');

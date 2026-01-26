@@ -4,7 +4,7 @@ export class SecondCheckoutPage {
     public readonly continueButton: Locator;
     public readonly cancelButton: Locator;
     public readonly backToProducts: Locator;
-    
+
 
     constructor(private readonly page: Page) {
         this.continueButton = page.locator('[data-test="finish"]');

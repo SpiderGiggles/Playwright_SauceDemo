@@ -47,15 +47,15 @@ export class SideNavigationMenu {
   public async openTwitter() {
     await this.twitterLink.scrollIntoViewIfNeeded();
     await this.twitterLink.click();
-}
+  }
 
-public async openFacebook() {
+  public async openFacebook() {
     await this.facebookLink.scrollIntoViewIfNeeded();
     await this.facebookLink.click();
-}
+  }
 
-public async openLinkedIn() {
+  public async openLinkedIn() {
     await this.linkedinLink.scrollIntoViewIfNeeded();
     await this.linkedinLink.click();
-}
+  }
 }

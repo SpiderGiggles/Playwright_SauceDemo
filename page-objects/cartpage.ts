@@ -1,6 +1,6 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
-export type ProductId = 
+export type ProductId =
     | 'sauce-labs-backpack'
     | 'sauce-labs-bike-light'
     | 'sauce-labs-bolt-t-shirt'
@@ -11,7 +11,7 @@ export type ProductId =
 export class CartPage {
     public readonly continueShopping: Locator;
     public readonly checkoutPage: Locator;
-    
+
 
     constructor(private readonly page: Page) {
         this.continueShopping = page.locator('[data-test="continue-shopping"]');
