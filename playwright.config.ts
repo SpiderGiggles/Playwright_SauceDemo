@@ -25,11 +25,12 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
-
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    screenshot: { mode: "only-on-failure", fullPage: true },
+    launchOptions: { args: ["--deny-permission-prompts"] },
+    trace: { mode: 'retain-on-failure', snapshots: true, screenshots: true, sources: true, attachments: true },
+    video: { mode: "retain-on-failure", size: { width: 1440, height: 900 } },
+    actionTimeout: 30 * 1000,
+    viewport: { width: 1440, height: 900 }
   },
 
   /* Configure projects for major browsers */
